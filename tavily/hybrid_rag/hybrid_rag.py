@@ -1,11 +1,13 @@
 import os
 from typing import Union, Optional, Literal
 
-import cohere
-from pymongo.collection import Collection
 from tavily import TavilyClient
 
-co = cohere.Client()
+try:
+    import cohere
+    co = cohere.Client()
+except:
+    co = None
 
 def _validate_index(client):
     """
@@ -69,7 +71,7 @@ class TavilyHybridClient():
             self,
             api_key: Union[str, None],
             db_provider: Literal['mongodb'],
-            collection: Collection,
+            collection,
             index: str,
             embeddings_field: str = 'embeddings',
             content_field: str = 'content',
